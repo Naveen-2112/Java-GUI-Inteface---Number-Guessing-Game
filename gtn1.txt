@@ -1,0 +1,143 @@
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class GuessTheNumber extends JFrame
+{
+    JFrame f=new JFrame();
+    JTextField tf1,tf2,tf3;
+    JLabel lb1,lb2,lb3,lb4,lb5;
+    JButton b1,b2;
+    int random=(int) (Math.random()*100);
+    ButtonListener1 bl1=new ButtonListener1();
+    ButtonListener2 bl2=new ButtonListener2();
+    int count;
+    
+
+
+    GuessTheNumber()
+    {
+    lb1=new JLabel("GUESS THE NUMBER ?");
+    lb1.setFont(new Font("Times new roman",Font.BOLD,24));
+    lb1.setBounds(50,75,400,40);
+
+    lb2=new JLabel("Enter a Number between 1 to 100");
+    lb2.setFont(new Font("SansSerif",Font.ITALIC,18));
+    lb2.setBounds(40,125,300,20);
+
+    lb3=new JLabel("Try ! and Guess the Number");
+    lb3.setBounds(90,175,250,15);
+
+    tf1=new JTextField(10);
+    tf1.setBounds(95,210,150,20);
+    
+    
+    tf2=new JTextField(10);
+    tf2.setBounds(325,30,50,20);
+    lb4=new JLabel("Best Score");
+    lb4.setBounds(250,23,75,30);
+
+
+    
+    tf3=new JTextField(10);
+    tf3.setBounds(115,30,50,20);
+    lb5=new JLabel("No.of Guesses");
+    lb5.setBounds(20,23,90,30);
+
+    b1=new JButton("Verify");
+    b1.setBounds(50,250,100,20);
+    b1.setBackground(Color.LIGHT_GRAY);
+    bl1=new ButtonListener1();
+    b1.addActionListener(bl1);
+    
+    b2=new JButton("Play Again");
+    b2.setBounds(200,250,100,20);
+    b2.setBackground(Color.LIGHT_GRAY);
+    bl2=new ButtonListener2();
+    b2.addActionListener(bl2);
+
+    
+    f.add(lb1);
+    f.add(lb2);
+    f.add(lb3);
+    f.add(tf1);
+    f.add(tf2);
+    f.add(lb4);
+    f.add(tf3);
+    f.add(lb5);
+    f.add(b1);
+    f.add(b2);
+    tf2.setEditable(false);
+    tf3.setEditable(false);
+    f.setSize(400,400);
+    f.setLayout(null);
+    f.setVisible(true);
+    f.setTitle("Number Guessing Game");
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    class ButtonListener1 implements ActionListener
+    {
+        int bestscore=1000;
+        public void actionPerformed(ActionEvent e)
+        {
+            String s=tf1.getText();
+            int num=Integer.parseInt(s);
+            count=count+1;
+            if(num<random)
+            {
+                String o1=num+" is low ,Try Again!";
+                lb3.setText(o1);
+                tf3.setText(count+"");
+            }
+            
+            else if(num>random)
+            {
+                String o2=num+" is high ,Try Again!";
+                lb3.setText(o2);
+                tf3.setText(count+"");
+            }
+
+            else
+            {
+            
+                
+                lb3.setText("Yayy! Congratulations !! You are Correct!");
+                if((count*10)<bestscore)
+                {   
+                    bestscore=count*10;
+                    tf2.setText(bestscore+"");
+                }
+                else
+                {
+                    tf2.setText(bestscore+"");
+                }
+                tf3.setText(count+"");
+                tf1.setEditable(false);
+            }
+        }
+    }
+
+    class ButtonListener2 implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            random=(int) (Math.random()*100);
+            tf1.setText("");
+            lb3.setText("Try ! and Guess the Number");
+            count=0;
+            tf3.setText("");
+            tf1.setEditable(true);
+        }
+    }
+
+
+    public static void main(String[] args)
+    {
+        new GuessTheNumber();
+    }
+
+
+
+}
